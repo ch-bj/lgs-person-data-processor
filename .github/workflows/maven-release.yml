@@ -39,6 +39,10 @@ jobs:
       run: mvn -B test
     - name: Maven build package
       run: mvn -B package
+    - name: Maven deploy to mvn repository
+      run: mvn -B deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Get jar name
       id: get-jar-name
       run: |
