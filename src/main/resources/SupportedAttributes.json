@@ -1,0 +1,70 @@
+{
+  "natuerlichePerson": [
+    {
+      "attributeName": "egpId",
+      "attributeType": "String",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": true
+    },
+    {
+      "attributeName": "name",
+      "attributeType": "String",
+      "processingFlags": ["PHONETICALLY_NORMALIZED", "EDITING_DISTANCE","HASHED","ENCRYPTED"],
+      "required": true
+    },
+    {
+      "attributeName": "vorname",
+      "attributeType": "String",
+      "processingFlags": ["PHONETICALLY_NORMALIZED", "EDITING_DISTANCE","HASHED","ENCRYPTED"],
+      "mergeWith": "name",
+      "required": false
+    },
+    {
+      "attributeName": "jahrgang",
+      "attributeType": "Integer",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": false
+    }
+  ],
+  "juristischePerson": [
+    {
+      "attributeName": "egpId",
+      "attributeType": "String",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": true
+    },
+    {
+      "attributeName": "name",
+      "attributeType": "String",
+      "processingFlags": ["PHONETICALLY_NORMALIZED", "HASHED","ENCRYPTED"],
+      "required": true
+    },
+    {
+      "attributeName": "sitz",
+      "attributeType": "String",
+      "processingFlags": ["PHONETICALLY_NORMALIZED", "HASHED","ENCRYPTED"],
+      "required": false
+    }
+  ],
+  "gemeinschaft": [
+    {
+      "attributeName": "egpId",
+      "attributeType": "String",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": true
+    },
+    {
+      "attributeName": "name",
+      "attributeType": "String",
+      "processingFlags": ["PHONETICALLY_NORMALIZED", "HASHED","ENCRYPTED"],
+      "required": true
+    },
+    {
+      "attributeName": "gemeinschaftArt",
+      "validMembers": ["EinfacheGesellschaft", "Guetergemeinschaft", "Erbengemeinschaft", "Gemeinderschaft"],
+      "attributeType": "Enum",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://datarocks.org/SupportedAttributesSchema.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "definitions": {
+    "personType": {
+      "type": "array",
+      "default": [],
+      "additionalItems": false,
+      "items": {
+        "anyOf": [{
+          "properties": {
+            "attributeName": {
+              "$id": "#/definitions/personType/items/anyOf/0/properties/attributeName",
+              "type": "string",
+              "minLength": 1,
+              "title": "The attributeName schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": ""
+            },
+            "attributeType": {
+              "$id": "#/definitions/personType/items/anyOf/0/properties/attributeType",
+              "type": "string",
+              "enum": [
+                "String",
+                "Integer",
+                "Enum"
+              ],
+              "title": "The attributeType schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": ""
+            },
+            "validMembers": {
+              "$id": "#/definitions/personType/items/anyOf/0/properties/validMembers",
+              "type": "array",
+              "title": "The attributeType schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": [],
+              "items": {
+                "anyOf": [{
+                  "$id": "#/definitions/personType/items/anyOf/0/properties/validMembers/items/anyOf/0",
+                  "type": "string"
+                }]
+              }
+            },
+            "processingFlags": {
+              "$id": "#/definitions/personTypr/items/anyOf/0/properties/processingFlags",
+              "type": "array",
+              "title": "The processingFlags schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": [],
+              "additionalItems": true,
+              "items": {
+                "$id": "#/definitions/personType/items/anyOf/0/properties/processingFlags/items",
+                "anyOf": [{
+                  "$id": "#/definitions/personType/items/anyOf/0/properties/processingFlags/items/anyOf/0",
+                  "type": "string",
+                  "enum": ["NONE", "PHONETICALLY_NORMALIZED", "EDITING_DISTANCE", "HASHED", "ENCRYPTED"],
+                  "title": "The first anyOf schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": ""
+                }]
+              }
+            },
+            "mergeWith": {
+              "$id": "#/definitions/personType/items/anyOf/1/properties/mergeWith",
+              "type": "string",
+              "title": "The mergeWith schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": ""
+            },
+            "required": {
+              "$id": "#/definitions/personType/items/anyOf/0/properties/required",
+              "type": "boolean",
+              "title": "The required schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": false
+            }
+          },
+          "additionalProperties": false
+        }]
+      }
+    }
+  },
+  "required": [
+    "natuerlichePerson",
+    "juristischePerson",
+    "gemeinschaft"
+  ],
+  "properties": {
+    "natuerlichePerson": {
+      "$id": "#/properties/natürlichePerson",
+      "title": "The natürlichePerson schema",
+      "description": "An explanation about the purpose of this instance.",
+      "$ref": "#/definitions/personType"
+    },
+    "juristischePerson": {
+      "$id": "#/properties/juristischePerson",
+      "title": "The juristischePerson schema",
+      "description": "An explanation about the purpose of this instance.",
+      "$ref": "#/definitions/personType"
+    },
+    "gemeinschaft": {
+      "$id": "#/properties/gemeinschaft",
+      "title": "The gemeinschaft schema",
+      "description": "An explanation about the purpose of this instance.",
+      "$ref": "#/definitions/personType"
+    }
+  },
+  "additionalProperties": false
+}

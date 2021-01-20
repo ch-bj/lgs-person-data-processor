@@ -1,0 +1,11 @@
+{
+  "metaData": {
+    "personType": "NATUERLICHE_PERSON",
+    "eventType": "INSERT"
+  },
+  "natuerlichePerson": {
+    "name": "Smith",
+    "vorname": "John",
+    "jahrgang": "1970"
+  }
+}
