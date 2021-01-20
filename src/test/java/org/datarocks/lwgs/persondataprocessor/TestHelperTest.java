@@ -13,6 +13,6 @@ class TestHelperTest {
 
     argumentList = TestHelper.generateRandomArguments(1, 100, 1024);
     assertTrue(argumentList.size() > 0);
-    assertTrue(argumentList.size() < 100);
+    assertTrue(argumentList.size() <= 100);
   }
 }

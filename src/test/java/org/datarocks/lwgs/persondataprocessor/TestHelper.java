@@ -23,7 +23,7 @@ public class TestHelper {
       int minNumArguments, int maxNumArguments, int stringSize) {
     List<String> argumentList = new ArrayList<>();
     final int numberOfArguments =
-        (int) (Math.random() * (maxNumArguments - minNumArguments + 1) + minNumArguments);
+        (int) (Math.random() * (maxNumArguments - minNumArguments) + minNumArguments);
     for (int i = 0; i < numberOfArguments; i++) {
       argumentList.add(RandomStringUtils.random(4096, true, true));
     }
