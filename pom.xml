@@ -6,13 +6,13 @@
 
   <groupId>org.datarocks.lwgs</groupId>
   <artifactId>person-data-processor</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
-    <banzai.version>1.0.0-SNAPSHOT</banzai.version>
+    <banzai.version>1.0.0</banzai.version>
     <junit.version>5.7.0</junit.version>
     <surfire.version>2.22.2</surfire.version>
     <assertj.version>3.18.1</assertj.version>
