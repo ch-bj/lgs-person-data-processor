@@ -50,7 +50,7 @@ attribute type).
 The library is provided through the github maven repository. Include the following dependency
 section in your pom file:
 
-```
+```xml
 <repositories>
    <repository>
       <id>github</id>
@@ -86,7 +86,7 @@ search-index-client and the LWGS search-index.
 More information on supported message digests can be found in
 section [AttributeSearchTermsHashing](#attributesearchtermshashing).
 
-```
+```java
 private static final String MESSAGE_DIGEST = "SHA-512";
 ```
 
@@ -100,7 +100,7 @@ specification is `RSA/ECB/PKCS1Padding`.
 More information on supported cipher specification and creation of private & public keys for testing
 can be found in section [AttributeSearchTermsEncryptor](#attributesearchtermsencryptor).
 
-```
+```java
 private static final String CIPHER_SPECIFICATION="RSA/ECB/PKCS1Padding";
 private static final String PUBLIC_KEY="MIIBIjANBgkqhkiG9....";
 ```
@@ -121,7 +121,7 @@ the `src/main/resources` folder. Load them from the classpath with a suitable re
 
 Provide both files as java Strings containing the json data:
 
-```
+```java
 private final String SUPPORTED_ATTRIBUTES_SCHEMA_JSON=""; // Load content of SupportedAttributesSchema.json
 private final String SUPPORTED_ATTRIBUTES_JSON=""; // Load content SupportesAttributes.json
 ```
@@ -130,7 +130,7 @@ private final String SUPPORTED_ATTRIBUTES_JSON=""; // Load content SupportesAttr
 
 Finally, create the `HandlerConfiguration` object:
 
-```
+```java
 HandlerConfiguration handlerConfiguration = 
     HandlerConfiguration.builder()
         .supportedAttributes(
@@ -143,7 +143,7 @@ HandlerConfiguration handlerConfiguration =
 
 ### Building of the Attribute Pipeline
 
-```
+```java
 PipeLine<Attribute, Attribute, Attribute> attributePipeline = 
     PipeLine.builder(handlerConfiguration, Attribute.class, Attribute.class, Attribute.class)
         .addHeadTransformer(PassTroughTransformer.<Attribute>builder().build())
@@ -157,7 +157,7 @@ PipeLine<Attribute, Attribute, Attribute> attributePipeline =
 
 ### Building of the GBPersonEvent Pipeline
 
-```
+```java
 PipeLine<String, GBPersonEvent, String> gbPersonEventPipeline = 
     PipeLine.builder(handlerConfiguration, String.class, GBPersonEvent.class, String.class)
         .addHeadTransformer(GBPersonRequestJsonDeserializer.builder().build())
@@ -217,9 +217,7 @@ The editing distance algorithm will produce ```2n+1; n=length of attribute value
 For the value `bird` it would create the following terms:
 
 ```
-
     *bird, *ird, b*ird, b*rd, bi*rd, bi*d, bir*d, bir*, bird*
-
 ```
 
 #### AttributeSearchTermsHashing
@@ -275,7 +273,7 @@ specification: [SupportedAttributes.json](src/main/resources/SupportedAttributes
 
 Example snippets of the SupportedAttributes.json:
 
-```
+```json
 { 
 ... 
     {
@@ -317,7 +315,7 @@ Example snippets of the SupportedAttributes.json:
 
 ## Working Minimal Implementation
 
-```
+```java
 package org.datarocks.lwgs.persondataprocessor;
 
 import java.io.IOException;
