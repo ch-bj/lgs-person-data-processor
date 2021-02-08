@@ -13,7 +13,7 @@
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
     <banzai.version>1.0.0</banzai.version>
-    <junit.version>5.7.0</junit.version>
+    <junit.version>5.7.1</junit.version>
     <surfire.version>2.22.2</surfire.version>
     <assertj.version>3.19.0</assertj.version>
     <lombok.version>1.18.16</lombok.version>
