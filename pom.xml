@@ -16,7 +16,7 @@
     <junit.version>5.7.1</junit.version>
     <surfire.version>2.22.2</surfire.version>
     <assertj.version>3.19.0</assertj.version>
-    <lombok.version>1.18.18</lombok.version>
+    <lombok.version>1.18.24</lombok.version>
     <mockito.version>4.5.1</mockito.version>
     <sonar.language>java</sonar.language>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
