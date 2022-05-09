@@ -10,8 +10,8 @@
   <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <banzai.version>1.1.0</banzai.version>
     <junit.version>5.7.1</junit.version>
     <surfire.version>2.22.2</surfire.version>
