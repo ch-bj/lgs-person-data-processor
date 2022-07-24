@@ -16,7 +16,7 @@
     <banzai.version>1.1.1</banzai.version>
     <junit.version>5.8.2</junit.version>
     <surfire.version>2.22.2</surfire.version>
-    <assertj.version>3.22.0</assertj.version>
+    <assertj.version>3.23.1</assertj.version>
     <lombok.version>1.18.24</lombok.version>
     <log4j.version>1.7.36</log4j.version>
     <gson.version>2.9.0</gson.version>
