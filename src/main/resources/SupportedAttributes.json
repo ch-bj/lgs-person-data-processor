@@ -24,6 +24,25 @@
       "attributeType": "Integer",
       "processingFlags": ["HASHED","ENCRYPTED"],
       "required": false
+    },
+    {
+      "attributeName": "geburtsdatum",
+      "attributeType": "String",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": false
+    },
+    {
+      "attributeName": "ahv",
+      "attributeType": "String",
+      "processingFlags": ["HASHED","ENCRYPTED"],
+      "required": false
+    },
+    {
+      "attributeName": "ahvStatus",
+      "validMembers": ["UNKNOWN", "NOT_APPROVED", "APPLIED_FOR", "ACTIVE", "INACTIVATED", "CANCELLED", "NOT_ASSIGNABLE"],
+      "attributeType": "Enum",
+      "processingFlags": [],
+      "required": false
     }
   ],
   "juristischePerson": [
@@ -43,6 +62,12 @@
       "attributeName": "sitz",
       "attributeType": "String",
       "processingFlags": ["PHONETICALLY_NORMALIZED", "HASHED","ENCRYPTED"],
+      "required": false
+    },
+    {
+      "attributeName": "uid",
+      "attributeType": "String",
+      "processingFlags": ["HASHED","ENCRYPTED"],
       "required": false
     }
   ],
