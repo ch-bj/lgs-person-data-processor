@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.datarocks.banzai.configuration.HandlerConfiguration;
 import org.datarocks.banzai.pipeline.PipeLine;
 import org.datarocks.banzai.pipeline.exception.HeadTransformerRequiredException;
@@ -39,7 +41,7 @@ class PipeLineTest {
   private static final String MESSAGE_DIGEST = "SHA-512";
 
   private static final String NATURAL_PERSON_JSON =
-      "{\"metaData\":{\"personType\":\"NATUERLICHE_PERSON\",\"eventType\":\"INSERT\", \"EGBPID\":\"CH000000000000\"},\"natuerlichePerson\":{\"name\":\"Smith\",\"vorname\":\"John\",\"jahrgang\":\"1970\"}}";
+      "{\"metaData\":{\"personType\":\"NATUERLICHE_PERSON\",\"eventType\":\"INSERT\", \"EGBPID\":\"CH000000000000\"},\"natuerlichePerson\":{\"name\":\"Smith\",\"vorname\":\"John\",\"jahrgang\":\"1970\",\"geburtsdatum\":\"01.01.1970\",\"ahvStatus\":\"UNKNOWN\",\"ahv\":\"123456\"}}";
 
   private static HandlerConfiguration handlerConfiguration;
 
@@ -156,7 +158,9 @@ class PipeLineTest {
     assertEquals(PersonType.NATUERLICHE_PERSON, processedGBPersonEvent.getPersonType());
     assertEquals(EventType.INSERT, processedGBPersonEvent.getEventType());
     assertNotNull(processedGBPersonEvent.getAttributes());
-    assertEquals(3, processedGBPersonEvent.getAttributes().size());
+    assertEquals(6, processedGBPersonEvent.getAttributes().size());
+    assertTrue(processedGBPersonEvent.getAttributes().stream().map(Attribute::getAttributeName).collect(
+        Collectors.toSet()).containsAll(Set.of("vorname", "name", "jahrgang", "geburtsdatum", "ahv", "ahvStatus")));
 
     GBPersonEvent decryptedGBPersonEvent =
         reversePipeline.process(UUID.randomUUID().toString(), processedGBPersonEvent);
