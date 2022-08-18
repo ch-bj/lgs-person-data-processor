@@ -159,8 +159,12 @@ class PipeLineTest {
     assertEquals(EventType.INSERT, processedGBPersonEvent.getEventType());
     assertNotNull(processedGBPersonEvent.getAttributes());
     assertEquals(6, processedGBPersonEvent.getAttributes().size());
-    assertTrue(processedGBPersonEvent.getAttributes().stream().map(Attribute::getAttributeName).collect(
-        Collectors.toSet()).containsAll(Set.of("vorname", "name", "jahrgang", "geburtsdatum", "ahv", "ahvStatus")));
+    assertTrue(
+        processedGBPersonEvent.getAttributes().stream()
+            .map(Attribute::getAttributeName)
+            .collect(Collectors.toSet())
+            .containsAll(
+                Set.of("vorname", "name", "jahrgang", "geburtsdatum", "ahv", "ahvStatus")));
 
     GBPersonEvent decryptedGBPersonEvent =
         reversePipeline.process(UUID.randomUUID().toString(), processedGBPersonEvent);
