@@ -55,14 +55,14 @@ section in your pom file:
    <repository>
       <id>github</id>
       <name>GitHub Datarocks Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/datarocks-ag/lwgs-referenzimplementierung-suchindex-client</url>
+      <url>https://maven.pkg.github.com/datarocks-ag/lwgs-person-data-processor</url>
    </repository>
 </repositories>
 
 <dependency>
     <groupId>org.datarocks.lwgs.persondataprocessor</groupId>
     <artifactId>lwgs-person-data-processor</artifactId>
-    <version>1.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -133,11 +133,11 @@ Finally, create the `HandlerConfiguration` object:
 ```java
 HandlerConfiguration handlerConfiguration = 
     HandlerConfiguration.builder()
-        .supportedAttributes(
-            SupportedAttributes .fromJson(SUPPORTED_ATTRIBUTES_SCHEMA_JSON, SUPPORTED_ATTRIBUTES_JSON))
+        .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_KEY_SUPPORTED_ATTRIBUTES,
+            SupportedAttributes.fromJson(SUPPORTED_ATTRIBUTES_SCHEMA_JSON, SUPPORTED_ATTRIBUTES_JSON))
         .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_KEY_PUBLIC_KEY, PUBLIC_KEY)
         .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER, CIPHER_SPECIFICATION)
-        .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_MESSAGE_DIGEST, MESSAGE_DIGEST)
+        .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_KEY_MESSAGE_DIGEST, MESSAGE_DIGEST)
         .build();
 ```
 
@@ -318,6 +318,11 @@ Example snippets of the SupportedAttributes.json:
 ```java
 package org.datarocks.lwgs.persondataprocessor;
 
+import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER;
+import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_MESSAGE_DIGEST;
+import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_PUBLIC_KEY;
+import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_SUPPORTED_ATTRIBUTES;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -325,13 +330,14 @@ import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
-import org.datarocks.pipeline.event.ProcessorEvent;
-import org.datarocks.pipeline.event.ProcessorEventListener;
-import org.datarocks.pipeline.configuration.HandlerConfiguration;
+import org.datarocks.banzai.configuration.HandlerConfiguration;
+import org.datarocks.banzai.event.ProcessorEvent;
+import org.datarocks.banzai.event.ProcessorEventListener;
+import org.datarocks.banzai.pipeline.PipeLine;
+import org.datarocks.banzai.transformer.PassTroughTransformer;
 import org.datarocks.lwgs.persondataprocessor.configuration.model.SupportedAttributes;
 import org.datarocks.lwgs.persondataprocessor.model.Attribute;
 import org.datarocks.lwgs.persondataprocessor.model.GBPersonEvent;
-import org.datarocks.pipeline.pipeline.PipeLine;
 import org.datarocks.lwgs.persondataprocessor.processor.AttributeSubPipeline;
 import org.datarocks.lwgs.persondataprocessor.processor.attributeprocessor.AttributeGenerateSearchTerms;
 import org.datarocks.lwgs.persondataprocessor.processor.attributeprocessor.AttributePhoneticallyNormalizeAttributeValue;
@@ -341,18 +347,16 @@ import org.datarocks.lwgs.persondataprocessor.processor.gbpersonprocessor.GBPers
 import org.datarocks.lwgs.persondataprocessor.processor.stringprocessor.EncryptionDecryptionAndMessageDigestHelper;
 import org.datarocks.lwgs.persondataprocessor.transformer.GBPersonJsonSerializer;
 import org.datarocks.lwgs.persondataprocessor.transformer.GBPersonRequestJsonDeserializer;
-import org.datarocks.pipeline.transformer.PassTroughTransformer;
 import org.junit.jupiter.api.Test;
 
-public class LwgsPipeline implements ProcessorEventListener {
+public class LwgsExamplePipeline implements ProcessorEventListener {
   private static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9....";
 
   private static final String CIPHER_SPECIFICATION = "RSA/ECB/PKCS1Padding";
   private static final String MESSAGE_DIGEST = "SHA-512";
 
   private final PipeLine<String, GBPersonEvent, String> gbPersonEventPipeline;
-
-  public LwgsPipeline() throws IOException, NoSuchAlgorithmException {
+  public LwgsExamplePipeline() throws IOException, NoSuchAlgorithmException {
     gbPersonEventPipeline = gbPersonEventPipeline();
   }
 
@@ -371,15 +375,15 @@ public class LwgsPipeline implements ProcessorEventListener {
     KeyPair keyPair = EncryptionDecryptionAndMessageDigestHelper.generateKeyPair("RSA", 2048);
 
     return HandlerConfiguration.builder()
-        .supportedAttributes(
+        .handlerConfigurationItem(PARAM_KEY_SUPPORTED_ATTRIBUTES,
             SupportedAttributes.fromJson(
                 readSupportedAttributesScheme(), readSupportedAttributes()))
         .handlerConfigurationItem(
             PARAM_KEY_PUBLIC_KEY,
             EncryptionDecryptionAndMessageDigestHelper.encodeBase64(
                 keyPair.getPublic().getEncoded()))
-        .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER, CIPHER_SPECIFICATION)
-        .handlerConfigurationItem(LWGSPersonDataProcessorParameters.PARAM_MESSAGE_DIGEST, MESSAGE_DIGEST)
+        .handlerConfigurationItem(PARAM_KEY_CIPHER, CIPHER_SPECIFICATION)
+        .handlerConfigurationItem(PARAM_KEY_MESSAGE_DIGEST, MESSAGE_DIGEST)
         .build();
   }
 
@@ -408,18 +412,20 @@ public class LwgsPipeline implements ProcessorEventListener {
 
   @Override
   public void processorEvent(ProcessorEvent processorEvent) {
+    // This listener will be called on events (normally errors or warnings) occurring during
+    // processing of the pipeline
     System.out.println("ProcessorEvent: " + processorEvent.getMessage());
   }
 
   public String processData(String inputGBPersonData) {
-    return gbPersonEventPipeline.process(UUID.randomUUID().toString(), inputGBPersonData);
-  }
-
-  @Test
-  void testMinimal() {
-    processData(
-        "{\"metaData\":{\"personType\":\"NATUERLICHE_PERSON\",\"eventType\":\"INSERT\", \"EGBPID\":\"CH000000000000\"},\"natuerlichePerson\":{\"name\":\"Smith\",\"vorname\":\"John\",\"jahrgang\":\"1970\"}}");
+    final String correlationId = UUID.randomUUID().toString();
+    return gbPersonEventPipeline.process(correlationId, inputGBPersonData);
   }
 }
+```
 
+And it's usage
+```java
+  String processedData = pipeline.processData(
+    "{\"metaData\":{\"personType\":\"NATUERLICHE_PERSON\",\"eventType\":\"INSERT\", \"EGBPID\":\"CH000000000000\"},\"natuerlichePerson\":{\"egpId\":\"123\",\"name\":\"Smith\",\"vorname\":\"John\",\"jahrgang\":\"1970\"}}");
 ```
