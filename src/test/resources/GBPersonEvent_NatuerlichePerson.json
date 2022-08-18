@@ -6,6 +6,9 @@
   "natuerlichePerson": {
     "name": "Smith",
     "vorname": "John",
-    "jahrgang": "1970"
+    "jahrgang": "1970",
+    "geburtsdatum": "01.01.1970",
+    "ahv": "",
+    "ahvStatus": "UNKNOWN"
   }
 }
