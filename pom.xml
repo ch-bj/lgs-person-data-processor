@@ -14,7 +14,7 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <banzai.version>1.2.0</banzai.version>
-    <junit.version>5.8.2</junit.version>
+    <junit.version>5.9.0</junit.version>
     <surfire.version>2.22.2</surfire.version>
     <assertj.version>3.23.1</assertj.version>
     <lombok.version>1.18.24</lombok.version>
