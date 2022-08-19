@@ -26,7 +26,7 @@
     <bouncycastle.version>1.70</bouncycastle.version>
     <mockito.version>4.7.0</mockito.version>
 
-    <maven-fmt.version>2.13</maven-fmt.version>
+    <maven-fmt.version>2.19</maven-fmt.version>
     <maven-sonar.version>3.9.1.2184</maven-sonar.version>
     <maven-jacoco.version>0.8.8</maven-jacoco.version>
 
@@ -140,7 +140,7 @@
         <version>${surfire.version}</version>
       </plugin>
       <plugin>
-        <groupId>com.coveo</groupId>
+        <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
         <version>${maven-fmt.version}</version>
         <executions>
