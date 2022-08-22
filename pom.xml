@@ -62,9 +62,9 @@
       <version>${gson.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.github.everit-org.json-schema</groupId>
-      <artifactId>org.everit.json.schema</artifactId>
-      <version>${json-schema.version}</version>
+	<groupId>com.github.erosb</groupId>
+	<artifactId>everit-json-schema</artifactId>
+	<version>${json-schema.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -197,12 +197,10 @@
       <url>https://maven.pkg.github.com/datarocks-ag/lwgs-person-data-processor</url>
     </repository>
   </distributionManagement>
-
   <repositories>
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
   </repositories>
-
 </project>
