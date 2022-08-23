@@ -60,11 +60,12 @@ section in your pom file:
 </repositories>
 
 <dependency>
-    <groupId>org.datarocks.lwgs.persondataprocessor</groupId>
-    <artifactId>lwgs-person-data-processor</artifactId>
-    <version>1.3.0</version>
+  <groupId>org.datarocks.lwgs</groupId>
+  <artifactId>person-data-processor</artifactId>
+  <version>1.3.1</version>
 </dependency>
 ```
+**Note:** Currently the package is not public - therefore you'll need to configure the github maven repository as authenticated server. For details see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages
 
 ### Pipeline creation and usage
 
