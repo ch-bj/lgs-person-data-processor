@@ -24,7 +24,7 @@ jobs:
     - name: Get the tag (without leading v)
       id: get_tag
       run: echo "release_tag_version=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
-    - uses: s4u/maven-settings-action@v2.6.0
+    - uses: s4u/maven-settings-action@v2.8.0
       with:
         servers: |
           [{
