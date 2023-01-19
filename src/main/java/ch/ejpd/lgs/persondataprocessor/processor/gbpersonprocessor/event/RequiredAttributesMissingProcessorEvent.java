@@ -16,6 +16,6 @@ public class RequiredAttributesMissingProcessorEvent extends AbstractProcessorEv
     return "Required attributes missing. CorrelationId("
         + getCorrelationId()
         + "), "
-        + supportedAttribute.toString();
+        + supportedAttribute;
   }
 }

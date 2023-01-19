@@ -3,6 +3,7 @@ package ch.ejpd.lgs.persondataprocessor.model;
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -22,11 +23,7 @@ public class GBPersonEvent {
       final List<Attribute> attributes) {
     this.personType = personType;
     this.eventType = eventType;
-    if (attributes == null) {
-      this.attributes = new ArrayList<>();
-    } else {
-      this.attributes = attributes;
-    }
+    this.attributes = Objects.requireNonNullElseGet(attributes, ArrayList::new);
   }
 
   public GBPersonEvent(GBPersonEvent gbPersonEvent) {

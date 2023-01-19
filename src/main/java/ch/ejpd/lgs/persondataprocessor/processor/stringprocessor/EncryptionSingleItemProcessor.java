@@ -5,12 +5,13 @@ import java.security.InvalidKeyException;
 import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 public class EncryptionSingleItemProcessor extends AbstractEncryptionSingleItemProcessor {
   @Override
-  public String processImpl(String correlationId, String input) {
+  public String processImpl(@NonNull final String correlationId, @NonNull final String input) {
     String encrypted = null;
     try {
       encrypted =
