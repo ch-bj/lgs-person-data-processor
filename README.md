@@ -55,14 +55,14 @@ section in your pom file:
    <repository>
       <id>github</id>
       <name>GitHub Datarocks Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/datarocks-ag/lwgs-person-data-processor</url>
+      <url>https://maven.pkg.github.com/datarocks-ag/lgs-person-data-processor</url>
    </repository>
 </repositories>
 
 <dependency>
-  <groupId>org.datarocks.lwgs</groupId>
+  <groupId>ch.ejpd.lgs</groupId>
   <artifactId>person-data-processor</artifactId>
-  <version>1.3.1</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 **Note:** Currently the package is not public - therefore you'll need to configure the github maven repository as authenticated server. For details see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages
@@ -317,12 +317,12 @@ Example snippets of the SupportedAttributes.json:
 ## Working Minimal Implementation
 
 ```java
-package org.datarocks.lwgs.persondataprocessor;
+package ch.ejpd.lgs.persondataprocessor;
 
-import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER;
-import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_MESSAGE_DIGEST;
-import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_PUBLIC_KEY;
-import static org.datarocks.lwgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_SUPPORTED_ATTRIBUTES;
+import static ch.ejpd.lgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER;
+import static ch.ejpd.lgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_MESSAGE_DIGEST;
+import static ch.ejpd.lgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_PUBLIC_KEY;
+import static ch.ejpd.lgs.persondataprocessor.configuration.LWGSPersonDataProcessorParameters.PARAM_KEY_SUPPORTED_ATTRIBUTES;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -331,97 +331,99 @@ import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
+
 import org.datarocks.banzai.configuration.HandlerConfiguration;
 import org.datarocks.banzai.event.ProcessorEvent;
 import org.datarocks.banzai.event.ProcessorEventListener;
 import org.datarocks.banzai.pipeline.PipeLine;
 import org.datarocks.banzai.transformer.PassTroughTransformer;
-import org.datarocks.lwgs.persondataprocessor.configuration.model.SupportedAttributes;
-import org.datarocks.lwgs.persondataprocessor.model.Attribute;
-import org.datarocks.lwgs.persondataprocessor.model.GBPersonEvent;
-import org.datarocks.lwgs.persondataprocessor.processor.AttributeSubPipeline;
-import org.datarocks.lwgs.persondataprocessor.processor.attributeprocessor.AttributeGenerateSearchTerms;
-import org.datarocks.lwgs.persondataprocessor.processor.attributeprocessor.AttributePhoneticallyNormalizeAttributeValue;
-import org.datarocks.lwgs.persondataprocessor.processor.attributeprocessor.AttributeSearchTermsEncryptor;
-import org.datarocks.lwgs.persondataprocessor.processor.attributeprocessor.AttributeSearchTermsHashing;
-import org.datarocks.lwgs.persondataprocessor.processor.gbpersonprocessor.GBPersonEventAttributeValidator;
-import org.datarocks.lwgs.persondataprocessor.processor.stringprocessor.EncryptionDecryptionAndMessageDigestHelper;
-import org.datarocks.lwgs.persondataprocessor.transformer.GBPersonJsonSerializer;
-import org.datarocks.lwgs.persondataprocessor.transformer.GBPersonRequestJsonDeserializer;
+import ch.ejpd.lgs.persondataprocessor.configuration.model.SupportedAttributes;
+import ch.ejpd.lgs.persondataprocessor.model.Attribute;
+import ch.ejpd.lgs.persondataprocessor.model.GBPersonEvent;
+import ch.ejpd.lgs.persondataprocessor.processor.AttributeSubPipeline;
+import ch.ejpd.lgs.persondataprocessor.processor.attributeprocessor.AttributeGenerateSearchTerms;
+import ch.ejpd.lgs.persondataprocessor.processor.attributeprocessor.AttributePhoneticallyNormalizeAttributeValue;
+import ch.ejpd.lgs.persondataprocessor.processor.attributeprocessor.AttributeSearchTermsEncryptor;
+import ch.ejpd.lgs.persondataprocessor.processor.attributeprocessor.AttributeSearchTermsHashing;
+import ch.ejpd.lgs.persondataprocessor.processor.gbpersonprocessor.GBPersonEventAttributeValidator;
+import ch.ejpd.lgs.persondataprocessor.processor.stringprocessor.EncryptionDecryptionAndMessageDigestHelper;
+import ch.ejpd.lgs.persondataprocessor.transformer.GBPersonJsonSerializer;
+import ch.ejpd.lgs.persondataprocessor.transformer.GBPersonRequestJsonDeserializer;
 import org.junit.jupiter.api.Test;
 
-public class LwgsExamplePipeline implements ProcessorEventListener {
-  private static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9....";
+public class LgsExamplePipeline implements ProcessorEventListener {
+    private static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9....";
 
-  private static final String CIPHER_SPECIFICATION = "RSA/ECB/PKCS1Padding";
-  private static final String MESSAGE_DIGEST = "SHA-512";
+    private static final String CIPHER_SPECIFICATION = "RSA/ECB/PKCS1Padding";
+    private static final String MESSAGE_DIGEST = "SHA-512";
 
-  private final PipeLine<String, GBPersonEvent, String> gbPersonEventPipeline;
-  public LwgsExamplePipeline() throws IOException, NoSuchAlgorithmException {
-    gbPersonEventPipeline = gbPersonEventPipeline();
-  }
+    private final PipeLine<String, GBPersonEvent, String> gbPersonEventPipeline;
 
-  public static String readSupportedAttributes() throws IOException {
-    Path path = Paths.get("src", "main", "resources", "SupportedAttributes.json");
-    return new String(Files.readAllBytes(path));
-  }
+    public LwgsExamplePipeline() throws IOException, NoSuchAlgorithmException {
+        gbPersonEventPipeline = gbPersonEventPipeline();
+    }
 
-  public static String readSupportedAttributesScheme() throws IOException {
-    Path path = Paths.get("src", "main", "resources", "schemas", "SupportedAttributesSchema.json");
-    return new String(Files.readAllBytes(path));
-  }
+    public static String readSupportedAttributes() throws IOException {
+        Path path = Paths.get("src", "main", "resources", "SupportedAttributes.json");
+        return new String(Files.readAllBytes(path));
+    }
 
-  private static HandlerConfiguration handlerConfiguration()
-      throws IOException, NoSuchAlgorithmException {
-    KeyPair keyPair = EncryptionDecryptionAndMessageDigestHelper.generateKeyPair("RSA", 2048);
+    public static String readSupportedAttributesScheme() throws IOException {
+        Path path = Paths.get("src", "main", "resources", "schemas", "SupportedAttributesSchema.json");
+        return new String(Files.readAllBytes(path));
+    }
 
-    return HandlerConfiguration.builder()
-        .handlerConfigurationItem(PARAM_KEY_SUPPORTED_ATTRIBUTES,
-            SupportedAttributes.fromJson(
-                readSupportedAttributesScheme(), readSupportedAttributes()))
-        .handlerConfigurationItem(
-            PARAM_KEY_PUBLIC_KEY,
-            EncryptionDecryptionAndMessageDigestHelper.encodeBase64(
-                keyPair.getPublic().getEncoded()))
-        .handlerConfigurationItem(PARAM_KEY_CIPHER, CIPHER_SPECIFICATION)
-        .handlerConfigurationItem(PARAM_KEY_MESSAGE_DIGEST, MESSAGE_DIGEST)
-        .build();
-  }
+    private static HandlerConfiguration handlerConfiguration()
+            throws IOException, NoSuchAlgorithmException {
+        KeyPair keyPair = EncryptionDecryptionAndMessageDigestHelper.generateKeyPair("RSA", 2048);
 
-  private PipeLine<Attribute, Attribute, Attribute> attributePipeline()
-      throws IOException, NoSuchAlgorithmException {
-    return PipeLine.builder(
-            handlerConfiguration(), Attribute.class, Attribute.class, Attribute.class)
-        .addHeadTransformer(PassTroughTransformer.<Attribute>builder().build())
-        .addStep(AttributePhoneticallyNormalizeAttributeValue.builder().build())
-        .addStep(AttributeGenerateSearchTerms.builder().build())
-        .addStep(AttributeSearchTermsHashing.builder().build())
-        .addStep(AttributeSearchTermsEncryptor.builder().build())
-        .addTailTransformer(PassTroughTransformer.<Attribute>builder().build())
-        .build();
-  }
+        return HandlerConfiguration.builder()
+                .handlerConfigurationItem(PARAM_KEY_SUPPORTED_ATTRIBUTES,
+                        SupportedAttributes.fromJson(
+                                readSupportedAttributesScheme(), readSupportedAttributes()))
+                .handlerConfigurationItem(
+                        PARAM_KEY_PUBLIC_KEY,
+                        EncryptionDecryptionAndMessageDigestHelper.encodeBase64(
+                                keyPair.getPublic().getEncoded()))
+                .handlerConfigurationItem(PARAM_KEY_CIPHER, CIPHER_SPECIFICATION)
+                .handlerConfigurationItem(PARAM_KEY_MESSAGE_DIGEST, MESSAGE_DIGEST)
+                .build();
+    }
 
-  private PipeLine<String, GBPersonEvent, String> gbPersonEventPipeline()
-      throws IOException, NoSuchAlgorithmException {
-    return PipeLine.builder(handlerConfiguration(), String.class, GBPersonEvent.class, String.class)
-        .addHeadTransformer(GBPersonRequestJsonDeserializer.builder().build())
-        .addStep(GBPersonEventAttributeValidator.builder().processorEventListener(this).build())
-        .addStep(AttributeSubPipeline.builder().attributePipeLine(attributePipeline()).build())
-        .addTailTransformer(GBPersonJsonSerializer.builder().build())
-        .build();
-  }
+    private PipeLine<Attribute, Attribute, Attribute> attributePipeline()
+            throws IOException, NoSuchAlgorithmException {
+        return PipeLine.builder(
+                        handlerConfiguration(), Attribute.class, Attribute.class, Attribute.class)
+                .addHeadTransformer(PassTroughTransformer.<Attribute>builder().build())
+                .addStep(AttributePhoneticallyNormalizeAttributeValue.builder().build())
+                .addStep(AttributeGenerateSearchTerms.builder().build())
+                .addStep(AttributeSearchTermsHashing.builder().build())
+                .addStep(AttributeSearchTermsEncryptor.builder().build())
+                .addTailTransformer(PassTroughTransformer.<Attribute>builder().build())
+                .build();
+    }
 
-  @Override
-  public void processorEvent(ProcessorEvent processorEvent) {
-    // This listener will be called on events (normally errors or warnings) occurring during
-    // processing of the pipeline
-    System.out.println("ProcessorEvent: " + processorEvent.getMessage());
-  }
+    private PipeLine<String, GBPersonEvent, String> gbPersonEventPipeline()
+            throws IOException, NoSuchAlgorithmException {
+        return PipeLine.builder(handlerConfiguration(), String.class, GBPersonEvent.class, String.class)
+                .addHeadTransformer(GBPersonRequestJsonDeserializer.builder().build())
+                .addStep(GBPersonEventAttributeValidator.builder().processorEventListener(this).build())
+                .addStep(AttributeSubPipeline.builder().attributePipeLine(attributePipeline()).build())
+                .addTailTransformer(GBPersonJsonSerializer.builder().build())
+                .build();
+    }
 
-  public String processData(String inputGBPersonData) {
-    final String correlationId = UUID.randomUUID().toString();
-    return gbPersonEventPipeline.process(correlationId, inputGBPersonData);
-  }
+    @Override
+    public void processorEvent(ProcessorEvent processorEvent) {
+        // This listener will be called on events (normally errors or warnings) occurring during
+        // processing of the pipeline
+        System.out.println("ProcessorEvent: " + processorEvent.getMessage());
+    }
+
+    public String processData(String inputGBPersonData) {
+        final String correlationId = UUID.randomUUID().toString();
+        return gbPersonEventPipeline.process(correlationId, inputGBPersonData);
+    }
 }
 ```
 
