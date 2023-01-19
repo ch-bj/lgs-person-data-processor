@@ -24,14 +24,6 @@ jobs:
         distribution: temurin
         java-version: 11
         cache: maven
-    - uses: s4u/maven-settings-action@v2.8.0
-      with:
-        servers: |
-          [{
-              "id": "github-banzai",
-              "username": "${{ secrets.GH_PACKAGE_USER }}",
-              "password": "${{ secrets.GH_PACKAGE_TOKEN }}"
-          }]
     - name: Maven verify
       run: mvn -B verify
     - name: Maven run tests

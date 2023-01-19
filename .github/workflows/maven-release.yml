@@ -24,14 +24,6 @@ jobs:
     - name: Get the tag (without leading v)
       id: get_tag
       run: echo "release_tag_version=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
-    - uses: s4u/maven-settings-action@v2.8.0
-      with:
-        servers: |
-          [{
-              "id": "github-banzai",
-              "username": "${{ secrets.GH_PACKAGE_USER }}",
-              "password": "${{ secrets.GH_PACKAGE_TOKEN }}"
-          }]
     - name: Maven verify
       run: mvn -B verify
     - name: Maven run tests
@@ -68,9 +60,9 @@ jobs:
         with:
           name: lwgs-person-data-processor-artifacts
           path: ./release/
-      - name: Create release ZIP
+      - name: Create source release ZIP
         run: |
-          cd ./release && zip -r ../lwgs-person-data-processor.zip * && cd -
+          cd ./release && zip -r ../lgs-person-data-processor.zip * && cd -
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -91,10 +83,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-            # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object,
+            # This pulls from the CREATE RELEASE step above, referencing its ID to get its outputs object,
             # which include a `upload_url`.
             # See this blog post for more info:
           # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./lwgs-person-data-processor.zip
-          asset_name: lwgs-person-data-processor-${{ env.release_tag }}.zip
+          asset_path: ./lgs-person-data-processor.zip
+          asset_name: lgs-person-data-processor-${{ env.release_tag }}.zip
           asset_content_type: application/zip

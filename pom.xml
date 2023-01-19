@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.datarocks.lwgs</groupId>
+  <groupId>ch.ejpd.lgs</groupId>
   <artifactId>person-data-processor</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -13,7 +13,7 @@
     <java.version>11</java.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <banzai.version>1.2.2</banzai.version>
+    <banzai.version>1.3.1</banzai.version>
     <junit.version>5.9.2</junit.version>
     <surfire.version>2.22.2</surfire.version>
     <assertj.version>3.24.1</assertj.version>
@@ -83,7 +83,7 @@
     </dependency>
 
     <dependency>
-      <groupId>com.github.datarocks-ag</groupId>
+      <groupId>org.datarocks</groupId>
       <artifactId>banzai</artifactId>
       <version>${banzai.version}</version>
     </dependency>
@@ -194,13 +194,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Datarocks Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/datarocks-ag/lwgs-person-data-processor</url>
+      <url>https://maven.pkg.github.com/datarocks-ag/lgs-person-data-processor</url>
     </repository>
   </distributionManagement>
-  <repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
 </project>
