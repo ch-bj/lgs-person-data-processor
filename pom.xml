@@ -194,7 +194,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Datarocks Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/datarocks-ag/lgs-person-data-processor</url>
+      <url>https://maven.pkg.github.com/datarocks-ag/lwgs-person-data-processor</url>
     </repository>
   </distributionManagement>
 </project>
