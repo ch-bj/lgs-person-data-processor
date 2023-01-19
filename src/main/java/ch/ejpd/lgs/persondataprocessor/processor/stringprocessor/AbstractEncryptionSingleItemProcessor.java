@@ -25,7 +25,7 @@ public abstract class AbstractEncryptionSingleItemProcessor
         getHandlerConfiguration()
             .getConfigurationItem(
                 String.class, LWGSPersonDataProcessorParameters.PARAM_KEY_PUBLIC_KEY);
-    if (!optionalPublicKey.isPresent()) {
+    if (optionalPublicKey.isEmpty()) {
       throw new RequiredParameterMissing(
           REQUIRED_PARAMETER_MISSING_MESSAGE
               + LWGSPersonDataProcessorParameters.PARAM_KEY_PUBLIC_KEY);
@@ -40,7 +40,7 @@ public abstract class AbstractEncryptionSingleItemProcessor
         getHandlerConfiguration()
             .getConfigurationItem(
                 String.class, LWGSPersonDataProcessorParameters.PARAM_KEY_PRIVATE_KEY);
-    if (!optionalPrivateKey.isPresent()) {
+    if (optionalPrivateKey.isEmpty()) {
       throw new RequiredParameterMissing(
           REQUIRED_PARAMETER_MISSING_MESSAGE
               + LWGSPersonDataProcessorParameters.PARAM_KEY_PRIVATE_KEY);
@@ -54,7 +54,7 @@ public abstract class AbstractEncryptionSingleItemProcessor
     Optional<String> optionalCipher =
         getHandlerConfiguration()
             .getConfigurationItem(String.class, LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER);
-    if (!optionalCipher.isPresent()) {
+    if (optionalCipher.isEmpty()) {
       throw new RequiredParameterMissing(
           REQUIRED_PARAMETER_MISSING_MESSAGE + LWGSPersonDataProcessorParameters.PARAM_KEY_CIPHER);
     }

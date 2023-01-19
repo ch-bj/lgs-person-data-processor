@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 import org.datarocks.banzai.exception.RequiredParameterMissing;
 import org.datarocks.banzai.processor.AbstractSingleItemProcessor;
@@ -17,7 +18,7 @@ public class HashingSingleItemProcessor extends AbstractSingleItemProcessor<Stri
         getHandlerConfiguration()
             .getConfigurationItem(
                 String.class, LWGSPersonDataProcessorParameters.PARAM_KEY_MESSAGE_DIGEST);
-    if (!optionalMessageDigest.isPresent()) {
+    if (optionalMessageDigest.isEmpty()) {
       throw new RequiredParameterMissing(
           "HashingSingleItemProcessor requires parameter "
               + LWGSPersonDataProcessorParameters.PARAM_KEY_MESSAGE_DIGEST);
@@ -31,7 +32,7 @@ public class HashingSingleItemProcessor extends AbstractSingleItemProcessor<Stri
   }
 
   @Override
-  public String processImpl(String correlationId, String input) {
+  public String processImpl(@NonNull final String correlationId, @NonNull final String input) {
     return EncryptionDecryptionAndMessageDigestHelper.bytesToHex(
         getMessageDigestFromConfigurationParameter()
             .digest(input.getBytes(StandardCharsets.UTF_8)));

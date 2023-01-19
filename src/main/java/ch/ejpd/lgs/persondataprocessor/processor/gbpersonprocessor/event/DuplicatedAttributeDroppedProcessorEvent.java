@@ -16,6 +16,6 @@ public class DuplicatedAttributeDroppedProcessorEvent extends AbstractProcessorE
     return "Duplicated attribute dropped. CorrelationId("
         + getCorrelationId()
         + "), "
-        + invalidAttribute.toString();
+        + invalidAttribute;
   }
 }

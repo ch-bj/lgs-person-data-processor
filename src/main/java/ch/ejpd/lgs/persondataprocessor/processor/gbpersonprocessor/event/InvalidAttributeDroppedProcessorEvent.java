@@ -16,12 +16,9 @@ public class InvalidAttributeDroppedProcessorEvent extends AbstractProcessorEven
   @Override
   public String getMessage() {
     String errorMessage =
-        "Invalid attribute dropped. CorrelationId("
-            + getCorrelationId()
-            + "), "
-            + invalidAttribute.toString();
+        "Invalid attribute dropped. CorrelationId(" + getCorrelationId() + "), " + invalidAttribute;
     if (supportedAttribute != null) {
-      errorMessage += ", " + supportedAttribute.toString();
+      errorMessage += ", " + supportedAttribute;
     }
     return errorMessage;
   }

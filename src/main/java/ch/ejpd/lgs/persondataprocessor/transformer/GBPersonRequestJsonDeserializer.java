@@ -81,11 +81,7 @@ public class GBPersonRequestJsonDeserializer extends AbstractTransformer<String,
       @NonNull final PersonType personType, final JsonObject personObject) {
     if (personObject == null) {
       throw new InvalidJsonStructure(
-          personType.toString()
-              + " is required if "
-              + JSON_ELEMENT_PERSON_TYPE
-              + " is "
-              + personType.toString());
+          personType + " is required if " + JSON_ELEMENT_PERSON_TYPE + " is " + personType);
     }
     return convertToAttributes(personObject);
   }

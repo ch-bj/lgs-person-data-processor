@@ -69,7 +69,7 @@ public class EncryptionDecryptionAndMessageDigestHelper {
   public static String decrypt(
       final @NonNull Cipher cipher,
       final @NonNull PrivateKey privateKey,
-      final @NonNull byte[] encryptedMessage)
+      final byte[] encryptedMessage)
       throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
     cipher.init(Cipher.DECRYPT_MODE, privateKey);
     return new String(cipher.doFinal(encryptedMessage), StandardCharsets.UTF_8);
