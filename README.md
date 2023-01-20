@@ -55,7 +55,7 @@ section in your pom file:
    <repository>
       <id>github</id>
       <name>GitHub LGS Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/CH-BJ/lgs-person-data-processor</url>
+      <url>https://maven.pkg.github.com/ch-bj/lgs-person-data-processor</url>
    </repository>
 </repositories>
 
