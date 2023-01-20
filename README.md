@@ -54,22 +54,22 @@ section in your pom file:
 <repositories>
    <repository>
       <id>github</id>
-      <name>GitHub Datarocks Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/datarocks-ag/lgs-person-data-processor</url>
+      <name>GitHub LGS Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/CH-BJ/lgs-person-data-processor</url>
    </repository>
 </repositories>
 
 <dependency>
   <groupId>ch.ejpd.lgs</groupId>
   <artifactId>person-data-processor</artifactId>
-  <version>1.4.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 **Note:** Currently the package is not public - therefore you'll need to configure the github maven repository as authenticated server. For details see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages
 
 ### Pipeline creation and usage
 
-The following code snippets show how to create a functional LWGS pipeline.
+The following code snippets show how to create a functional LGS pipeline.
 
 #### Handler Configuration
 

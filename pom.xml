@@ -37,8 +37,8 @@
     </sonar.coverage.jacoco.xmlReportPaths>
     <sonar.jacoco.reportsPaths>${project.build.directory}/jacoco-ut.exec</sonar.jacoco.reportsPaths>
     <sonar.tests>src/test/java</sonar.tests>
-    <sonar.projectKey>lwgs</sonar.projectKey>
-    <sonar.host.url>http://localhost:9000</sonar.host.url>
+<!--    <sonar.projectKey>lwgs</sonar.projectKey>-->
+<!--    <sonar.host.url>http://localhost:9000</sonar.host.url>-->
     <!--suppress UnresolvedMavenProperty -->
     <sonar.login>${env.SONAR_LOGIN}</sonar.login>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -152,11 +152,11 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>${maven-sonar.version}</version>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.sonarsource.scanner.maven</groupId>-->
+<!--        <artifactId>sonar-maven-plugin</artifactId>-->
+<!--        <version>${maven-sonar.version}</version>-->
+<!--      </plugin>-->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -193,8 +193,8 @@
   <distributionManagement>
     <repository>
       <id>github</id>
-      <name>GitHub Datarocks Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/datarocks-ag/lwgs-person-data-processor</url>
+      <name>GitHub LGS Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/CH-BJ/lgs-person-data-processor</url>
     </repository>
   </distributionManagement>
 </project>
