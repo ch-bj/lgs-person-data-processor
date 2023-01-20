@@ -39,7 +39,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: lwgs-person-data-processor-artifacts
+        name: lgs-person-data-processor-artifacts
         path: |
           target/*.jar
           !target/*-SNAPSHOT.jar
@@ -58,7 +58,7 @@ jobs:
       - name: Download artefact
         uses: actions/download-artifact@v3
         with:
-          name: lwgs-person-data-processor-artifacts
+          name: lgs-person-data-processor-artifacts
           path: ./release/
       - name: Create source release ZIP
         run: |

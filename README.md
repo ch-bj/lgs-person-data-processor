@@ -1,7 +1,7 @@
-# LWGS Person-Data-Processor
+# LGS Person-Data-Processor
 
 The person data processor is part of the Search-Index-Client for the project **Landesweite
-Grundstücksuche (LWGS)**.
+Grundstücksuche (LGS)**.
 
 The search-index-client offers different integration scenarios:
 
