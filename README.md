@@ -9,9 +9,6 @@ The search-index-client offers different integration scenarios:
    person-data-processor).
 2. Direct integration of the person-data-processor java library into an existing application.
 
-More details on the different integration scenarios can be found in
-the [search-index-client repository]().
-
 This documentation explains the direct integration of the person-data-processor library.
 
 ## System Architecture
@@ -62,10 +59,9 @@ section in your pom file:
 <dependency>
   <groupId>ch.ejpd.lgs</groupId>
   <artifactId>person-data-processor</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.3</version>
 </dependency>
 ```
-**Note:** Currently the package is not public - therefore you'll need to configure the github maven repository as authenticated server. For details see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-to-github-packages
 
 ### Pipeline creation and usage
 
@@ -79,10 +75,10 @@ LWGS-pipeline:
 
 ###### Message Digest
 
-The attribute search terms are hashed, to prevent extraction of person data. Currently `SHA-515` is
+The attribute search terms are hashed, to prevent extraction of person data. Currently `SHA-512` is
 defined as message digest for all delivering applications. The message digest will be defined by the
-LWGS operations team for all clients, since it needs to be consistent between the
-search-index-client and the LWGS search-index.
+LGS operations team for all clients, since it needs to be consistent between the
+search-index-client and the LGS search-index.
 
 More information on supported message digests can be found in
 section [AttributeSearchTermsHashing](#attributesearchtermshashing).
@@ -95,7 +91,7 @@ private static final String MESSAGE_DIGEST = "SHA-512";
 
 After the attribute search terms where hashed, the search terms will additionally be encrypted to
 prevent a dictionary attack on the hashes. The public key required for encryption, as well as the
-cipher specification, will be provided by the LWGS operations team. The currently defined cipher
+cipher specification, will be provided by the LGS operations team. The currently defined cipher
 specification is `RSA/ECB/PKCS1Padding`.
 
 More information on supported cipher specification and creation of private & public keys for testing
@@ -205,7 +201,7 @@ Does the phonetic normalization on attribute values, according to Normalization 
 defined in the [Unicode® Standard Annex #15](https://www.unicode.org/reports/tr15/).
 
 This processor is controlled by the *processingFlag* `PHONETICALLY_NORMALIZED` in
-the [SupportedAttributes.json](#supportedattributesjson) file. If the
+the [SupportedAttributes.json](#supportedattributesjson) file.
 
 #### AttributeGenerateSearchTerms
 
@@ -229,7 +225,7 @@ file.
 
 ##### Required Parameters
 
-PARAM_MESSAGE_DIGEST: Any supported message digest according to
+`PARAM_MESSAGE_DIGEST`: Any supported message digest according to
 the [MessageDigest](https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html)
 specification.
 
@@ -241,7 +237,7 @@ file.
 
 ##### Required Parameters
 
-PARAM_KEY_CIPHER: Any supported cipher according to
+`PARAM_KEY_CIPHER`: Any supported cipher according to
 the  [Cipher](https://docs.oracle.com/javase/8/docs/api/javax/crypto/Cipher.html)
 specification.
 
@@ -294,7 +290,6 @@ Example snippets of the SupportedAttributes.json:
     } 
 ... 
 }
-
 ```
 
 #### Attribute Properties
