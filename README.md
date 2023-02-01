@@ -102,6 +102,8 @@ private static final String CIPHER_SPECIFICATION="RSA/ECB/PKCS1Padding";
 private static final String PUBLIC_KEY="MIIBIjANBgkqhkiG9....";
 ```
 
+> This is not used at the moment.
+
 ###### Attribute Processing Specifications
 
 The person-data-processor library supports a configuration driven approach to define processing
