@@ -56,7 +56,7 @@ jobs:
           mkdir -p release
           cp -r README.md COPYRIGHT LICENSE doc release/
       - name: Download artefact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: lgs-person-data-processor-artifacts
           path: ./release/
